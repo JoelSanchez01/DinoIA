@@ -1,0 +1,493 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg-primary: #0b0f19;
+  --bg-card: rgba(21, 30, 48, 0.75);
+  --bg-card-border: rgba(255, 255, 255, 0.08);
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-main: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bg-card-border);
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  font-size: 24px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.brand h1 span {
+  color: var(--accent-cyan);
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--accent-green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Controls Bar */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--bg-card-border);
+}
+
+.control-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--bg-card-border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn.active {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.speed-select {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-main);
+  border: 1px solid var(--bg-card-border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Main Split Layout */
+.app-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 24px 20px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Section 1: Dino Game (Top) */
+.game-section {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.section-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.section-title i {
+  color: var(--accent-cyan);
+}
+
+.game-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-pill {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  border: 1px solid var(--bg-card-border);
+}
+
+.stat-pill span {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+/* Dino Viewport Frame */
+.game-viewport {
+  width: 920px;
+  height: 250px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contenedor {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(#1e293b, #0f172a);
+  transition: background 1s ease;
+  overflow: hidden;
+}
+
+.contenedor.mediodia {
+  background: linear-gradient(#334155, #1e293b);
+}
+
+.contenedor.tarde {
+  background: linear-gradient(#475569, #334155);
+}
+
+.contenedor.noche {
+  background: linear-gradient(#0f172a, #020617);
+}
+
+.dino {
+  width: 84px;
+  height: 84px;
+  position: absolute;
+  bottom: 22px;
+  left: 42px;
+  z-index: 2;
+  background: url(img/dino.png) repeat-x 0px 0px;
+  background-size: 336px 84px;
+}
+
+.dino-corriendo {
+  animation: animarDino 0.25s steps(2) infinite;
+}
+
+.dino-estrellado {
+  background-position-x: -252px;
+}
+
+.suelo {
+  width: 200%;
+  height: 42px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: url(img/suelo.png) repeat-x 0px 0px;
+  background-size: 50% 42px;
+}
+
+.cactus {
+  width: 46px;
+  height: 96px;
+  position: absolute;
+  bottom: 16px;
+  left: 600px;
+  z-index: 1;
+  background: url(img/cactus1.png) no-repeat;
+}
+
+.cactus2 {
+  width: 46px;
+  height: 96px;
+  background: url(img/cactus2.png) no-repeat;
+}
+
+.nube {
+  width: 92px;
+  height: 26px;
+  position: absolute;
+  z-index: 0;
+  background: url(img/nube.png) no-repeat;
+  background-size: 92px 26px;
+  opacity: 0.6;
+}
+
+.score {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  z-index: 10;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.game-over {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  text-align: center;
+  color: #ef4444;
+  font-size: 36px;
+  font-family: var(--font-main);
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  background: rgba(15, 23, 42, 0.85);
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes animarDino {
+  from { background-position-x: -84px; }
+  to { background-position-x: -252px; }
+}
+
+/* Section 2: Neural Network Visualizer (Bottom) */
+.network-section {
+  flex: 1;
+  min-height: 340px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.network-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  gap: 16px;
+  flex: 1;
+  height: 100%;
+}
+
+.telemetry-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.telemetry-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--bg-card-border);
+  padding-bottom: 6px;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+  border-radius: 4px;
+  transition: width 0.1s linear;
+}
+
+.progress-bar-fill.output-fill {
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+}
+
+.decision-box {
+  margin-top: auto;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bg-card-border);
+  text-align: center;
+}
+
+.decision-badge {
+  font-size: 18px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.decision-badge.jump {
+  color: var(--accent-pink);
+  text-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+  transform: scale(1.05);
+}
+
+.decision-badge.run {
+  color: var(--accent-cyan);
+}
+
+/* Canvas Container */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  background: rgba(11, 15, 25, 0.7);
+  border: 1px solid var(--bg-card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+canvas#nnCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .network-grid {
+    grid-template-columns: 1fr;
+  }
+  .game-viewport {
+    width: 100%;
+    max-width: 920px;
+  }
+}

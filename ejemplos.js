@@ -1,4 +1,4 @@
-const ejemplos = [
+var ejemplos = [
   {
     input: {
       distancia: 290.9173333333333,
@@ -8131,4 +8131,9 @@ const ejemplos = [
   },
 ];
 
-export default ejemplos;
+if (typeof window !== "undefined") {
+  window.ejemplos = ejemplos;
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = ejemplos;
+}

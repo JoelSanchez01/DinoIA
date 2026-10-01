@@ -1,182 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinosaurio Chrome V2</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        body {
-            height: 100vh;
-            background: #584040;
-            display: flex;
-            align-items: center;
-        }
-
-        .contenedor {
-            width: 920px;
-            height: 280px;
-            margin: 0 auto;
-
-            position: relative;
-
-            background: linear-gradient(#b7d6c7, transparent) #ffe2d1;
-            /*linear-gradient(#90ebff, white);*/
-            transition: background-color 1s linear;
-            overflow: hidden;
-        }
-
-        .mediodia {
-            background-color: #ffdcf3;
-        }
-
-        .tarde {
-            background-color: #ffadad;
-        }
-
-        .noche {
-            background-color: #aca8c7;
-        }
-
-        .dino {
-            width: 84px;
-            height: 84px;
-
-            position: absolute;
-            bottom: 22px;
-            left: 42px;
-            z-index: 2;
-
-            background: url(img/dino.png) repeat-x 0px 0px;
-            background-size: 336px 84px;
-            background-position-x: 0px;
-
-        }
-
-        .dino-corriendo {
-            animation: animarDino 0.25s steps(2) infinite;
-        }
-
-        .dino-estrellado {
-            background-position-x: -252px;
-        }
-
-        .suelo {
-            width: 200%;
-            height: 42px;
-
-            position: absolute;
-            bottom: 0;
-            left: 0;
-
-            background: url(img/suelo.png) repeat-x 0px 0px;
-            background-size: 50% 42px;
-
-        }
-
-        .cactus {
-            width: 46px;
-            height: 96px;
-
-            position: absolute;
-            bottom: 16px;
-            left: 600px;
-            z-index: 1;
-
-            background: url(img/cactus1.png) no-repeat;
-        }
-
-        .cactus2 {
-            width: 46px;
-            height: 96px;
-
-            background: url(img/cactus1.png) no-repeat;
-        }
-
-        .nube {
-            width: 92px;
-            height: 26px;
-
-            position: absolute;
-            z-index: 0;
-
-            background: url(img/nube.png) no-repeat;
-            background-size: 92px 26px;
-        }
-
-        .score {
-            width: 100px;
-            height: 30px;
-
-            position: absolute;
-            top: 5px;
-            right: 15px;
-            z-index: 10;
-
-            color: #d48871;
-            font-family: Verdana;
-            font-size: 30px;
-            font-weight: bold;
-            text-align: right;
-        }
-
-        .game-over {
-            display: none;
-
-            position: absolute;
-            width: 100%;
-
-
-            text-align: center;
-            color: #7e928b;
-            font-size: 30px;
-            font-family: Verdana;
-            font-weight: 700;
-        }
-
-        @keyframes animarDino {
-            from {
-                background-position-x: -84px;
-            }
-
-            to {
-                background-position-x: -252px;
-            }
-        }
-    </style>
+    <title>DinoIA - Red Neuronal Visual en Tiempo Real</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
 
-    <div class="contenedor">
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="brand">
+            <i class="fa-solid fa-brain brand-icon"></i>
+            <h1>Dino<span>IA</span> Visualizer</h1>
+            <div class="status-badge">
+                <div class="dot"></div>
+                <span id="statusText">IA Entrenada & Lista</span>
+            </div>
+        </div>
 
-        <div class="suelo"></div>
+        <div class="controls-bar">
+            <div class="control-group">
+                <span class="control-label"><i class="fa-solid fa-gauge-high"></i> Velocidad:</span>
+                <select id="speedSelect" class="speed-select">
+                    <option value="0.25">0.25x (Muy Lento)</option>
+                    <option value="0.5" selected>0.50x (Lento - Recomendado)</option>
+                    <option value="1.0">1.00x (Normal)</option>
+                    <option value="1.5">1.50x (Rápido)</option>
+                </select>
+            </div>
 
-        <div class="dino dino-corriendo"></div>
+            <div class="control-group">
+                <button id="toggleAiBtn" class="btn active">
+                    <i class="fa-solid fa-robot"></i> Modo IA
+                </button>
+                <button id="resetBtn" class="btn">
+                    <i class="fa-solid fa-rotate-right"></i> Reiniciar
+                </button>
+            </div>
+        </div>
+    </header>
 
-        <div class="score">0</div>
+    <!-- Main Split App Container -->
+    <main class="app-container">
 
-    </div>
+        <!-- Top Section: Dino Game Viewport -->
+        <section class="game-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-gamepad"></i> Juego del Dinosaurio Chrome
+                </div>
+                <div class="game-stats">
+                    <div class="stat-pill">FPS: <span id="fpsVal">60</span></div>
+                    <div class="stat-pill">Dificultad: <span id="diffVal">1.3x</span></div>
+                </div>
+            </div>
 
-    <div class="game-over">GAME OVER</div>
+            <div class="game-viewport">
+                <div class="contenedor">
+                    <div class="suelo"></div>
+                    <div class="dino dino-corriendo"></div>
+                    <div class="score">0</div>
+                    <div class="game-over">GAME OVER</div>
+                </div>
+            </div>
+        </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+        <!-- Bottom Section: Neural Network Live Visualizer -->
+        <section class="network-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-diagram-project"></i> Representación Gráfica de la Red Neuronal (Brain.js)
+                </div>
+                <div class="stat-pill">Modelo: <span>Perceptrón Multicapa</span></div>
+            </div>
+
+            <div class="network-grid">
+                <!-- Left Telemetry Card: Input Features -->
+                <div class="telemetry-card">
+                    <div class="telemetry-title"><i class="fa-solid fa-right-to-bracket"></i> Entradas (Inputs)</div>
+                    
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>1. Distancia Obstáculo</span>
+                            <span class="metric-val" id="rawDistVal">0 px</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="distFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>2. Velocidad Escenario</span>
+                            <span class="metric-val" id="rawVelVal">1.3</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="velFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>3. Ancho del Cactus</span>
+                            <span class="metric-val" id="rawWidthVal">46 px</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="widthFill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Canvas: Neural Diagram -->
+                <div class="canvas-container">
+                    <canvas id="nnCanvas"></canvas>
+                </div>
+
+                <!-- Right Telemetry Card: Output Decision -->
+                <div class="telemetry-card">
+                    <div class="telemetry-title"><i class="fa-solid fa-right-from-bracket"></i> Salida (Output)</div>
+                    
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>Probabilidad de Salto</span>
+                            <span class="metric-val" id="saltoProbVal">0.00%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill output-fill" id="saltoFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span>Umbral de Activación</span>
+                            <span class="metric-val">50.00%</span>
+                        </div>
+                    </div>
+
+                    <div class="decision-box">
+                        <div class="control-label" style="margin-bottom: 4px;">Acción de la IA</div>
+                        <div class="decision-badge run" id="decisionBadge">CORRER</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Brain.js Neural Network Library -->
     <script src="https://unpkg.com/brain.js"></script>
-    <script type="module" src="./javascript.js"></script>
-
-
-
-
-
-
-    </script>
+    <!-- Dataset -->
+    <script src="./ejemplos.js"></script>
+    <!-- Game & AI Engine -->
+    <script src="./javascript.js"></script>
 </body>
 
 </html>
