@@ -285,7 +285,7 @@ function DetectarColision() {
       const resultado = network.run(entrada);
       console.log(resultado.saltar);
 
-      if (resultado.saltar >= 0.03) Saltar();
+      if (resultado.saltar >= 0.035) Saltar();
 
       textoScore.innerText = score;
       //EVADE
